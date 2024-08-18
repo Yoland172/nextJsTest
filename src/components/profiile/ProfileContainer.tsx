@@ -3,9 +3,7 @@ import { useState } from "react";
 import Profile from "./Profile";
 import { useAppContext } from "@/context";
 import { changeUserField } from "@/api/requests";
-import {
-  setUserDataToStorage,
-} from "@/lib/helpers/authHelper";
+import { setUserDataToStorage } from "@/lib/helpers/authHelper";
 
 function ProfileContainer() {
   const { userDataState, setUserDataState } = useAppContext();
@@ -22,13 +20,14 @@ function ProfileContainer() {
       );
 
       const updatedUserData = { ...userData.user, token: userDataState!.token };
-      setUserDataState && setUserDataState(updatedUserData);
+
+      setUserDataState?.(updatedUserData);
       setUserDataToStorage(updatedUserData);
       setError(null);
       setLoadingField(null);
-    } catch (err: any) {
-      setError("invalid field value ");
-      setLoadingField(null)
+    } catch (err) {
+      setError(`Invalid field value: ${fieldQuery}`);
+      setLoadingField(null);
     }
   };
 

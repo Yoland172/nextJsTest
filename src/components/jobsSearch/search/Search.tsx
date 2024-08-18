@@ -9,11 +9,11 @@ interface SearchProps {
 const Search = ({ search }: SearchProps) => {
   const [query, setQuery] = useState("");
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     search(query);
   };

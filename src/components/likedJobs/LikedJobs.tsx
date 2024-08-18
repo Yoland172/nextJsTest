@@ -1,11 +1,11 @@
 "use client";
 
-import { JobItem as JobItemI } from "@/api/types";
+import { JobItem as JobItemModel } from "@/api/types";
 import React from "react";
 import JobItem from "../../ui/jobItem/JobItem";
 
 interface LikedJobsProps {
-  jobs: JobItemI[] | null;
+  jobs: JobItemModel[] | null;
   action: (id: string) => void;
 }
 

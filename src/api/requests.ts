@@ -1,6 +1,5 @@
 import axios from "axios";
 import { ReqData, UserData } from "./types";
-import { headers } from "next/headers";
 
 const jobInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
@@ -14,9 +13,7 @@ const authInstance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_AUTH_API_URL}`,
 });
 
-//jobs
-
-export const getJobsBySearch = async (query: string|null) => {
+export const getJobsBySearch = async (query: string) => {
   const res = await jobInstance.get<ReqData>(`/search?query=${query}&page=1`);
   return res.data;
 };
@@ -26,7 +23,6 @@ export const getJobById = async (id: string) => {
   return res.data;
 };
 
-//auth
 export const login = async (email: string, password: string) => {
   const res = await authInstance.post<UserData>(`/auth/login`, {
     email,
@@ -58,11 +54,11 @@ export const changeUserField = async (
   const res = await authInstance.patch(
     "/profile",
     {
-      [fieldName]: fieldQuery, // Тіло запиту з динамічним полем
+      [fieldName]: fieldQuery,
     },
     {
       headers: {
-        Authorization: `Bearer ${token}`, // Токен передається в заголовках
+        Authorization: `Bearer ${token}`,
       },
     }
   );

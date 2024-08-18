@@ -12,6 +12,7 @@ import { useAppContext } from "@/context";
 const RegistrationContainer = () => {
   const router = useRouter();
   const { setUserDataState } = useAppContext();
+
   const handleCreateProfile = async (
     name: string,
     email: string,
@@ -23,9 +24,10 @@ const RegistrationContainer = () => {
       setUserDataState && setUserDataState(data);
       router.push("/jobs");
     } catch (e) {
-      console.log("invalid data");
+      console.error("invalid data");
     }
   };
+
   return <Registaration createProfile={handleCreateProfile} />;
 };
 

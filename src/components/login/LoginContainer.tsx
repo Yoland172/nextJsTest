@@ -9,16 +9,16 @@ import { setUserDataToStorage } from "@/lib/helpers/authHelper";
 
 const LoginContainer = () => {
   const router = useRouter();
-  const { userDataState, setUserDataState } = useAppContext();
+  const { setUserDataState } = useAppContext();
 
   const handleLogin = async (email: string, password: string) => {
     try {
       const data = await login(email, password);
       setUserDataToStorage(data);
-      setUserDataState && setUserDataState(data);
+      setUserDataState?.(data);
       router.push("/jobs");
     } catch (e) {
-      console.log("invalid login");
+      console.error("Invalid login");
     }
   };
 

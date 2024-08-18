@@ -7,9 +7,7 @@ import { useAppContext } from "@/context";
 const ProfileNavContainer = () => {
   const { userDataState } = useAppContext();
 
-  const userName = userDataState ? userDataState.name : null;
-
-  return <Profile name={userName} />;
+  return <Profile name={userDataState?.name} />;
 };
 
 export default ProfileNavContainer;

@@ -1,7 +1,7 @@
 "use client";
 
 import { useContext, useReducer, useEffect } from "react";
-import { reducer } from "./reducer";
+import { reducer, ReducerActionTypes } from "./reducer";
 import { AppContext, INITIAL_STATE } from "./context";
 import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
 import { UserData } from "@/lib/models";
@@ -11,7 +11,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
 
   const setUserDataState = (value?: UserData) => {
     dispatch({
-      type: "userDataState",
+      type: ReducerActionTypes.UpdateUserData,
       payload: {
         userDataState: value,
       },

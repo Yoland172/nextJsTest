@@ -3,8 +3,9 @@ import { LikeButtonContainer } from "@/components/likeButton";
 import Image from "next/image";
 import React from "react";
 
-const JobDetails = async ({ params }: any) => {
+const JobDetails = async ({ params }: { params: { id: string } }) => {
   const res = await getJobById(params.id);
+
   return (
     <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 border border-gray-200 mx-auto w-4/5 mt-20 m-10">
       <div className="flex justify-between items-center">

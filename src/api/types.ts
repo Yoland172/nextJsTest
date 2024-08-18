@@ -41,8 +41,6 @@ export interface ReqData {
   parameters: Params;
 }
 
-//login
-
 export interface UserData {
   token: string;
   name: string;

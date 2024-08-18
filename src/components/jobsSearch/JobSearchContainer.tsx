@@ -14,7 +14,7 @@ const JobSearchContainer = () => {
 
   const [jobs, setJobs] = useState<JobItem[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const query = userDataState?.desiredJobTitle || null;
+  const query = userDataState?.desiredJobTitle || "";
 
   const { data } = useSWR(
     query ? `/search?query=${query}` : null,
@@ -41,7 +41,7 @@ const JobSearchContainer = () => {
       {userDataState?.desiredJobTitle || jobs ? (
         <Jobs jobs={jobs} isLoading={isLoading} />
       ) : (
-        <NoRecomendations isUserLogged={!!userDataState}/>
+        <NoRecomendations isUserLogged={!!userDataState} />
       )}
     </>
   );

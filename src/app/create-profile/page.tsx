@@ -8,9 +8,7 @@ const CreateProfile = () => {
         <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
           Registration
         </h2>
-
         <RegistrationContainer />
-
         <p className="text-center text-gray-600 text-sm mt-4">
           Do have an account?{" "}
           <Link href="/login" className="text-blue-500 hover:text-blue-700">
