@@ -1,5 +1,5 @@
 import { getJobById } from "@/api/requests";
-import LikeButtonContainer from "@/ui/likeButton/LikeButtonContainer";
+import LikeButtonContainer from "@/components/likeButton/LikeButtonContainer";
 import Image from "next/image";
 import React from "react";
 

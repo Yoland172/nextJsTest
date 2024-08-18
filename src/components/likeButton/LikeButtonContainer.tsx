@@ -1,12 +1,13 @@
+//src/components/likeButton/LikedButtonsContainer.tsx
 "use client";
 import { JobItem } from "@/api/types";
-import LikeButton from "./LikeButton";
 import {
   addLikedJobToStorage,
   deleteLikedJobFromStorage,
   getLikedJobsFromStorage,
 } from "@/lib/helpers/likeHelper";
 import { useEffect, useState } from "react";
+import LikeButton from "./likeButton";
 
 interface LikeButtonContainerProps {
   jobInfo: JobItem;
@@ -16,16 +17,9 @@ const LikeButtonContainer = ({ jobInfo }: LikeButtonContainerProps) => {
   const [isLiked, setIsLiked] = useState<boolean>(false);
 
   useEffect(() => {
-    const jobsFromStorage = getLikedJobsFromStorage();
-    if (jobsFromStorage) {
-      console.log(jobsFromStorage);
-      const jobIndex = jobsFromStorage.findIndex(
-        (el) => el.job_id == jobInfo.job_id
-      );
-      if (jobIndex > -1) {
-        setIsLiked(true);
-      }
-    }
+    const jobsFromStorage = getLikedJobsFromStorage() || [];
+    const isLiked = jobsFromStorage.some((el) => el.job_id == jobInfo.job_id);
+    if (isLiked) setIsLiked(true);
   }, []);
 
   const setLike = () => {

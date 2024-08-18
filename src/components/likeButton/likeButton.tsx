@@ -8,7 +8,7 @@ interface LikeButtonProps {
 
 const LikeButton = ({ isLiked, action }: LikeButtonProps) => {
   return (
-    <button className="flex gap-1 bg-blue-500 p-1.5" onClick={action}>
+    <button className="flex gap-1 bg-blue-500 p-1.5 text-white" onClick={action}>
       <span className="">Like</span> <LikeIcon size={24} filled={isLiked} />
     </button>
   );

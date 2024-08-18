@@ -24,7 +24,7 @@ const JobItem = ({
   return (
     <div className="w-full max-w-[1000px] h-fit h-60 border-solid border-2 border-blue-500 rounded-md p-8">
       <div className={"flex w-full gap-[20px]"}>
-        <img src={img} alt="job-avatar" className="w-[56px] h-auto" />
+        <img src={img} alt="job-avatar" className="h-[56px] w-auto" />
         <div>
           <h2 className="text-[1.3em] font-medium">{title}</h2>
           <div className="flex gap-x-5">
@@ -34,11 +34,7 @@ const JobItem = ({
           </div>
         </div>
       </div>
-      {description.length > 300 ? (
-        <h3 className="p-10">{`${description.substring(0, 300)}...`}</h3>
-      ) : (
-        <h3 className="p-10">{description}</h3>
-      )}
+        <h3 className="p-10">{description.length > 300 ? `${description.substring(0, 300)}...` : description}</h3>
       {children}
     </div>
   );

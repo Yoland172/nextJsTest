@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InlineSpinner from "../inlineSpinner/InlineSpinner";
+import InlineSpinner from "../spinners/InlineSpinner";
 
 interface UserPreferenceProps {
   title: string;

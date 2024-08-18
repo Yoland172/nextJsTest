@@ -17,7 +17,7 @@ const authInstance = axios.create({
 //jobs
 
 export const getJobsBySearch = async (query: string) => {
-  const res = await jobInstance.get(`/search?query=${query}&page=1`);
+  const res = await jobInstance.get<ReqData>(`/search?query=${query}&page=1`);
   return res.data;
 };
 

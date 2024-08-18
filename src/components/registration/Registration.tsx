@@ -1,4 +1,5 @@
 import { useAppContext } from "@/context";
+import InputField from "@/ui/inputField/InputField";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -25,67 +26,44 @@ const Registration = ({ createProfile }: RegistrationProps) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-4 h-24">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Full Name:
-        </label>
-        <input
-          {...register("fulName", {
-            required: "Required",
-            pattern: {
-              value:
-                /^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ]+(?:\s+[A-Za-zА-Яа-яЁёЇїІіЄєҐґ]+)+$/,
-              message: "Please enter a full name",
-            },
-            minLength: 3,
-            maxLength: 50,
-          })}
-          type="text"
-          className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
-          placeholder="Enter your full name"
-        />
-        {errors.fulName && (
-          <p className="text-red-500 text-sm mt-1">{errors.fulName.message}</p>
-        )}
-      </div>
+      <InputField
+        title="Full Name"
+        registerReq={register("fulName", {
+          required: "Required",
+          pattern: {
+            value:
+              /^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ]+(?:\s+[A-Za-zА-Яа-яЁёЇїІіЄєҐґ]+)+$/,
+            message: "Please enter a full name",
+          },
+          minLength: 3,
+          maxLength: 50,
+        })}
+        type="text"
+        error={errors.fulName}
+      />
 
-      <div className="mb-4 h-24">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Email:
-        </label>
-        <input
-          {...register("email", {
-            required: "Required",
-            pattern: {
-              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-              message: "invalid email address",
-            },
-            maxLength: 50,
-          })}
-          className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
-          placeholder="Enter your email"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
-        )}
-      </div>
+      <InputField
+        title="Email"
+        registerReq={register("email", {
+          required: "Required",
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: "invalid email address",
+          },
+          maxLength: 50,
+        })}
+        type="text"
+        error={errors.email}
+      />
 
-      <div className="mb-6 h-24">
-        <label className="block text-gray-700 text-sm font-bold mb-2">
-          Password:
-        </label>
-        <input
-          {...register("password", {
-            required: "Required",
-          })}
-          type="password"
-          className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
-          placeholder="Create a password"
-        />
-        {errors.password && (
-          <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
-        )}
-      </div>
+      <InputField
+        title="Password"
+        registerReq={register("password", {
+          required: "Required",
+        })}
+        type="password"
+        error={errors.password}
+      />
 
       <button
         type="submit"

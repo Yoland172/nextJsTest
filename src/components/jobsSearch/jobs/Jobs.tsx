@@ -1,20 +1,25 @@
 "use client";
 
-import { ReqData } from "@/api/types";
-import React, { useEffect } from "react";
+import { JobItem as JobItemI } from "@/api/types";
+import React from "react";
 import JobItem from "../../../ui/jobItem/JobItem";
 import Link from "next/link";
+import Spinner from "@/ui/spinners/Spinner";
 
 interface JobsProp {
-  jobs: ReqData | null;
+  jobs: JobItemI[] | null;
   isLoading: boolean;
 }
 
-const Jobs = ({ jobs }: JobsProp) => {
+const Jobs = ({ jobs, isLoading }: JobsProp) => {
+  {
+    if (isLoading) return <Spinner />;
+  }
+
   return (
     <section className="flex flex-col gap-[15px]">
-      {jobs?.data &&
-        jobs?.data.map((el) => {
+      {jobs &&
+        jobs.map((el) => {
           return (
             <JobItem
               key={el.job_id}
@@ -29,7 +34,7 @@ const Jobs = ({ jobs }: JobsProp) => {
                 href={`/job-details/${el.job_id}`}
                 className="text-white ml-10 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
-                Detalies...
+                Read More
               </Link>
             </JobItem>
           );

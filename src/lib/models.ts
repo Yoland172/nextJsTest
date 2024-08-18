@@ -1,3 +1,4 @@
+//src/lib/models.ts
 export interface UserData {
   token: string;
   name: string;

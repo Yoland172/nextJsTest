@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  useContext,
-  useReducer,
-  useEffect
-} from "react";
+import { useContext, useReducer, useEffect } from "react";
 import { reducer } from "./reducer";
 import { AppContext, INITIAL_STATE } from "./context";
 import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
 import { UserData } from "@/lib/models";
-
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -18,26 +13,26 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
     dispatch({
       type: "userDataState",
       payload: {
-        userDataState: value
-      }
-    })
-  }
+        userDataState: value,
+      },
+    });
+  };
 
   const fetchUserData = () => {
-      const data = getUserDataFromStorage() 
+    const data = getUserDataFromStorage();
 
     setUserDataState(data || undefined);
-  }
+  };
 
   useEffect(() => {
-    fetchUserData()
-  }, [])
+    fetchUserData();
+  }, []);
 
   return (
     <AppContext.Provider
       value={{
         ...state,
-        setUserDataState
+        setUserDataState,
       }}
     >
       {children}
