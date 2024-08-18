@@ -1,9 +1,8 @@
-import { UserData } from "@/api/types";
-import { Dispatch, SetStateAction } from "react";
+import { UserData } from "@/lib/models";
 
 export type STATE_PROPS = {
-  userDataState: any;
-  setUserDataState: ((value: any) => void) | null
+  userDataState?: UserData;
+  setUserDataState?: ((value: UserData) => void);
 };
 
 export const reducer = (

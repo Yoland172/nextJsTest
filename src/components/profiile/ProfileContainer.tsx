@@ -1,36 +1,40 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Profile from "./Profile";
 import { useAppContext } from "@/context";
 import { changeUserField } from "@/api/requests";
 import {
-  getUserDataFromStorage,
   setUserDataToStorage,
 } from "@/lib/helpers/authHelper";
 
 function ProfileContainer() {
   const { userDataState, setUserDataState } = useAppContext();
   const [error, setError] = useState<string | null>(null);
-  const userDataFromStorage = getUserDataFromStorage();
+  const [loadingField, setLoadingField] = useState<string | null>(null);
+
   const handleChangeField = async (fieldName: string, fieldQuery: string) => {
     try {
+      setLoadingField(fieldName);
       const userData = await changeUserField(
         fieldName,
         fieldQuery,
-        userDataState.token
+        userDataState!.token
       );
 
-      const updatedUserData = { ...userData.user, token: userDataState.token };
+      const updatedUserData = { ...userData.user, token: userDataState!.token };
       setUserDataState && setUserDataState(updatedUserData);
       setUserDataToStorage(updatedUserData);
       setError(null);
+      setLoadingField(null);
     } catch (err: any) {
       setError("invalid field value ");
+      setLoadingField(null)
     }
   };
 
   return (
     <Profile
+      loadingField={loadingField}
       userInfo={userDataState}
       changeField={handleChangeField}
       error={error}

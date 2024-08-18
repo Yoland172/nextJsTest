@@ -4,6 +4,7 @@ import "./globals.css";
 import ProfileNavContainer from "@/components/profileNav/ProfileNavContainer";
 import React from "react";
 import { AppWrapper } from "@/context";
+import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
@@ -20,7 +21,10 @@ export default function RootLayout({
     <html lang="en">
       <AppWrapper>
         <body className={inter.className}>
-          <header className="bg-gray-500 w-full h-11 flex justify-end items-center pr-[10px] relative">
+          <header className="bg-gray-500 w-full h-11 flex justify-between items-center pr-[10px] relative p-3">
+            <Link href={"/jobs"} className="text-white">
+              Search job
+            </Link>
             <ProfileNavContainer />
           </header>
           {children}

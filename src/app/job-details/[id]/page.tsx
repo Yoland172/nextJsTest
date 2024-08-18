@@ -1,5 +1,5 @@
 import { getJobById } from "@/api/requests";
-import LikeButton from "@/ui/likeButton/LikeButton";
+import LikeButtonContainer from "@/ui/likeButton/LikeButtonContainer";
 import Image from "next/image";
 import React from "react";
 
@@ -11,13 +11,15 @@ const JobDetails = async ({ params }: any) => {
         <h2 className="text-xl font-bold text-blue-600">
           {res.data[0].job_title}
         </h2>
-        <Image
-          width={80}
-          height={80}
-          src={res.data[0].employer_logo}
-          alt="Employer Logo"
-          className="w-16 h-16 rounded-full border border-blue-200"
-        />
+        {res.data[0].employer_logo && (
+          <Image
+            width={80}
+            height={80}
+            src={res.data[0].employer_logo}
+            alt="Employer Logo"
+            className="w-16 h-16 rounded-full border border-blue-200"
+          />
+        )}
       </div>
       <div>
         <h3 className="text-lg font-semibold">{res.data[0].employer_name}</h3>
@@ -80,7 +82,7 @@ const JobDetails = async ({ params }: any) => {
           ).toLocaleDateString()}
         </p>
       </div>
-      <LikeButton isLiked={false} />
+      <LikeButtonContainer jobInfo={res.data[0]} />
     </div>
   );
 };

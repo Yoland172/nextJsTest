@@ -1,4 +1,7 @@
+import { deleteUserDataFromSotage } from "@/lib/helpers/authHelper";
+import { deleteAllLikedJobsFromSotage } from "@/lib/helpers/likeHelper";
 import Link from "next/link";
+import { Router } from "next/router";
 import { useState } from "react";
 
 interface ProfileNavProps {
@@ -10,6 +13,12 @@ const ProfileNav = ({ name }: ProfileNavProps) => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const handlSignOut = () => {
+    deleteAllLikedJobsFromSotage();
+    deleteUserDataFromSotage();
+    window.location.reload();
   };
 
   return (
@@ -31,7 +40,10 @@ const ProfileNav = ({ name }: ProfileNavProps) => {
                   <Link href={"/profile"}>Profile</Link>
                 </li>
                 <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
-                  Sign out
+                  <Link href={"/liked"}>Liked</Link>
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
+                  <button onClick={handlSignOut}>Sign out</button>
                 </li>
               </>
             ) : (

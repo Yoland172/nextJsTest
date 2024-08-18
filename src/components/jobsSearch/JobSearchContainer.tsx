@@ -6,7 +6,7 @@ import { getJobsBySearch } from "@/api/requests";
 import { ReqData } from "@/api/types";
 import Jobs from "./jobs/Jobs";
 import { useAppContext } from "@/context";
-import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
+import NoRecomendations from "./NoRecomendations";
 
 const JobSearchContainer = () => {
   const { userDataState } = useAppContext();
@@ -30,7 +30,7 @@ const JobSearchContainer = () => {
     }
   };
   useEffect(() => {
-    setJobsByRecomend();
+    if (userDataState?.desiredJobTitle) setJobsByRecomend();
   }, [userDataState]);
 
   const [jobs, setJobs] = useState<ReqData | null>(null);
@@ -39,7 +39,11 @@ const JobSearchContainer = () => {
   return (
     <>
       <Search search={handleSearch} />
-      <Jobs jobs={jobs} isLoading={isLoading} />
+      {userDataState?.desiredJobTitle || jobs ? (
+        <Jobs jobs={jobs} isLoading={isLoading} />
+      ) : (
+        <NoRecomendations />
+      )}
     </>
   );
 };

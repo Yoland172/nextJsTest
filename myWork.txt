@@ -1,0 +1,329 @@
+diff --git a/src/app/globals.css b/src/app/globals.css
+index ad119cd..cd3b927 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -16,10 +16,6 @@
+   }
+ }
+ 
+-body {
+-
+-}
+-
+ @layer utilities {
+   .text-balance {
+     text-wrap: balance;
+diff --git a/src/components/jobsSearch/JobSearchContainer.tsx b/src/components/jobsSearch/JobSearchContainer.tsx
+index c27a312..b8ce9b3 100644
+--- a/src/components/jobsSearch/JobSearchContainer.tsx
++++ b/src/components/jobsSearch/JobSearchContainer.tsx
+@@ -7,6 +7,7 @@ import { ReqData } from "@/api/types";
+ import Jobs from "./jobs/Jobs";
+ import { useAppContext } from "@/context";
+ import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
++import NoRecomendations from "./No Recomendations";
+ 
+ const JobSearchContainer = () => {
+   const { userDataState } = useAppContext();
+@@ -30,7 +31,7 @@ const JobSearchContainer = () => {
+     }
+   };
+   useEffect(() => {
+-    setJobsByRecomend();
++    if (userDataState?.desiredJobTitle) setJobsByRecomend();
+   }, [userDataState]);
+ 
+   const [jobs, setJobs] = useState<ReqData | null>(null);
+@@ -39,7 +40,7 @@ const JobSearchContainer = () => {
+   return (
+     <>
+       <Search search={handleSearch} />
+-      <Jobs jobs={jobs} isLoading={isLoading} />
++      {userDataState?.desiredJobTitle ? <Jobs jobs={jobs} isLoading={isLoading} /> : <NoRecomendations />}
+     </>
+   );
+ };
+diff --git a/src/components/profiile/Profile.tsx b/src/components/profiile/Profile.tsx
+index ce54e0d..317d00e 100644
+--- a/src/components/profiile/Profile.tsx
++++ b/src/components/profiile/Profile.tsx
+@@ -2,27 +2,39 @@
+ 
+ import { UserData } from "@/api/types";
+ import UserPreference from "@/ui/userPreference/UserPreference";
+-import React, { useState } from "react";
++import React from "react";
+ 
+ interface ProfileProps {
+   userInfo: UserData | undefined;
+   error: string | null;
++  loadingField: string | null;
+   changeField: (fieldName: string, fieldQuery: string) => void;
+ }
+ 
+-const Profile = ({ userInfo, changeField, error }: ProfileProps) => {
+-  const [editingField, setEditingField] = useState<string>("");
++const Profile = ({ userInfo, changeField, loadingField, error }: ProfileProps) => {
++  const preferences = [
++    {
++      title: "Name",
++      filedKey: "name",
++      data: userInfo?.name,
++      type: "input",
++    },
++    {
++      title: "Desired Job Title",
++      filedKey: "desiredJobTitle",
++      data: userInfo?.desiredJobTitle,
++      type: "input",
++    },
++    {
++      title: "About Me",
++      filedKey: "aboutMe",
++      data: userInfo?.aboutMe,
++      type: "textarea",
++    },
++  ];
+ 
+   return (
+     <>
+-      <UserPreference
+-        title={"Name"}
+-        defaultValue={userInfo?.name}
+-        type="input"
+-        changeField={(fieldQuery: string) => {
+-          changeField("name", fieldQuery);
+-        }}
+-      />
+       <div className="mb-6 flex justify-between items-center border-b pb-4">
+         <div>
+           <label className="text-lg text-gray-700 font-semibold">Email:</label>
+@@ -30,23 +42,18 @@ const Profile = ({ userInfo, changeField, error }: ProfileProps) => {
+         </div>
+       </div>
+ 
+-      <UserPreference
+-        title={"Desired Job Title"}
+-        defaultValue={userInfo?.desiredJobTitle}
+-        type="input"
+-        changeField={(fieldQuery: string) => {
+-          changeField("desiredJobTitle", fieldQuery);
+-        }}
+-      />
+-
+-      <UserPreference
+-        title="About Me"
+-        defaultValue={userInfo?.aboutMe}
+-        type="textarea"
+-        changeField={(fieldQuery: string) => {
+-          changeField("aboutMe", fieldQuery);
+-        }}
+-      />
++      {preferences.map((preference) => (
++        <UserPreference
++          key={preference.filedKey}
++          title={preference.title}
++          defaultValue={preference.data}
++          isLoading={preference.filedKey === loadingField}
++          type={preference.type as "input" | "textarea"}
++          changeField={(fieldQuery: string) =>
++            changeField(preference.filedKey, fieldQuery)
++          }
++        />
++      ))}
+       {error && <p className="text-red-500 text-center">{error}</p>}
+     </>
+   );
+diff --git a/src/components/profiile/ProfileContainer.tsx b/src/components/profiile/ProfileContainer.tsx
+index 3d4b4dd..1be8788 100644
+--- a/src/components/profiile/ProfileContainer.tsx
++++ b/src/components/profiile/ProfileContainer.tsx
+@@ -1,36 +1,40 @@
+ "use client";
+-import { useEffect, useState } from "react";
++import { useState } from "react";
+ import Profile from "./Profile";
+ import { useAppContext } from "@/context";
+ import { changeUserField } from "@/api/requests";
+ import {
+-  getUserDataFromStorage,
+   setUserDataToStorage,
+ } from "@/lib/helpers/authHelper";
+ 
+ function ProfileContainer() {
+   const { userDataState, setUserDataState } = useAppContext();
+   const [error, setError] = useState<string | null>(null);
+-  const userDataFromStorage = getUserDataFromStorage();
++  const [loadingField, setLoadingField] = useState<string | null>(null);
++
+   const handleChangeField = async (fieldName: string, fieldQuery: string) => {
+     try {
++      setLoadingField(fieldName);
+       const userData = await changeUserField(
+         fieldName,
+         fieldQuery,
+-        userDataState.token
++        userDataState!.token
+       );
+ 
+-      const updatedUserData = { ...userData.user, token: userDataState.token };
++      const updatedUserData = { ...userData.user, token: userDataState!.token };
+       setUserDataState && setUserDataState(updatedUserData);
+       setUserDataToStorage(updatedUserData);
+       setError(null);
++      setLoadingField(null);
+     } catch (err: any) {
+       setError("invalid field value ");
++      setLoadingField(null)
+     }
+   };
+ 
+   return (
+     <Profile
++      loadingField={loadingField}
+       userInfo={userDataState}
+       changeField={handleChangeField}
+       error={error}
+diff --git a/src/context/context.ts b/src/context/context.ts
+index 23bc19c..0b64484 100644
+--- a/src/context/context.ts
++++ b/src/context/context.ts
+@@ -2,9 +2,10 @@ import { createContext } from 'react'
+ import { STATE_PROPS } from './reducer';
+ 
+ 
++
+ export const INITIAL_STATE = {
+-    userDataState: null,
+-    setUserDataState: null
++    userDataState: undefined,
++    setUserDataState: undefined
+   }
+   
+ 
+diff --git a/src/context/index.tsx b/src/context/index.tsx
+index f0154c8..80b8312 100644
+--- a/src/context/index.tsx
++++ b/src/context/index.tsx
+@@ -8,12 +8,13 @@ import {
+ import { reducer } from "./reducer";
+ import { AppContext, INITIAL_STATE } from "./context";
+ import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
++import { UserData } from "@/lib/models";
+ 
+ 
+ export function AppWrapper({ children }: { children: React.ReactNode }) {
+   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+ 
+-  const setUserDataState = (value: any) => {
++  const setUserDataState = (value?: UserData) => {
+     dispatch({
+       type: "userDataState",
+       payload: {
+@@ -25,7 +26,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
+   const fetchUserData = () => {
+       const data = getUserDataFromStorage() 
+ 
+-    setUserDataState(data)
++    setUserDataState(data || undefined);
+   }
+ 
+   useEffect(() => {
+diff --git a/src/context/reducer.ts b/src/context/reducer.ts
+index 23f20b0..e349b49 100644
+--- a/src/context/reducer.ts
++++ b/src/context/reducer.ts
+@@ -1,9 +1,8 @@
+-import { UserData } from "@/api/types";
+-import { Dispatch, SetStateAction } from "react";
++import { UserData } from "@/lib/models";
+ 
+ export type STATE_PROPS = {
+-  userDataState: any;
+-  setUserDataState: ((value: any) => void) | null
++  userDataState?: UserData;
++  setUserDataState?: ((value: UserData) => void);
+ };
+ 
+ export const reducer = (
+diff --git a/src/ui/userPreference/UserPreference.tsx b/src/ui/userPreference/UserPreference.tsx
+index db030ad..58fff64 100644
+--- a/src/ui/userPreference/UserPreference.tsx
++++ b/src/ui/userPreference/UserPreference.tsx
+@@ -1,9 +1,11 @@
+ import React, { useEffect, useState } from "react";
++import InlineSpinner from "../inlineSpinner/InlineSpinner";
+ 
+ interface UserPreferenceProps {
+   title: string;
+   defaultValue: string | undefined;
+   type: "input" | "textarea";
++  isLoading: boolean;
+   changeField: (fieldQuery: string) => void;
+ }
+ 
+@@ -12,6 +14,7 @@ const UserPreference = ({
+   defaultValue,
+   type,
+   changeField,
++  isLoading,
+ }: UserPreferenceProps) => {
+   const [query, setQuery] = useState<string>("");
+   const [isEditing, setIsEditing] = useState<boolean>(false);
+@@ -56,21 +59,12 @@ const UserPreference = ({
+       </div>
+ 
+       <div className="ml-4">
+-        {isEditing ? (
+-          <button
+-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-200"
+-            onClick={handleSetQuery}
+-          >
+-            Save
+-          </button>
+-        ) : (
+-          <button
+-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-200"
+-            onClick={() => setIsEditing(true)}
+-          >
+-            Edit
+-          </button>
+-        )}
++        <button
++          className=" flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-200"
++          onClick={isEditing ? handleSetQuery : () => setIsEditing(true)}
++        >
++          {isLoading ? <InlineSpinner size={20}/> : isEditing ? "Save" : "Edit"}
++        </button>
+       </div>
+     </div>
+   );
+diff --git a/tailwind.config.ts b/tailwind.config.ts
+index e9a0944..8d2d880 100644
+--- a/tailwind.config.ts
++++ b/tailwind.config.ts
+@@ -5,6 +5,7 @@ const config: Config = {
+     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
++    "src/ui/**/*.{js,ts,jsx,tsx,mdx}"
+   ],
+   theme: {
+     extend: {
+@@ -13,6 +14,16 @@ const config: Config = {
+         "gradient-conic":
+           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+       },
++      keyframes: {
++        spin: {
++          to: {
++            transform: 'rotate(360deg)',
++          },
++        },
++      },
++      animation: {
++        spin: 'spin 1s linear infinite', // Adjust the duration, timing function, and iteration count as needed
++      },
+     },
+   },
+   plugins: [],

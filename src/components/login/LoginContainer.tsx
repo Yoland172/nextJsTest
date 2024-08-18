@@ -16,7 +16,7 @@ const LoginContainer = () => {
       const data = await login(email, password);
       setUserDataToStorage(data);
       setUserDataState && setUserDataState(data);
-      router.push("/");
+      router.push("/jobs");
     } catch (e) {
       console.log("invalid login");
     }

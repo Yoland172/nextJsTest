@@ -8,12 +8,13 @@ import {
 import { reducer } from "./reducer";
 import { AppContext, INITIAL_STATE } from "./context";
 import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
+import { UserData } from "@/lib/models";
 
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  const setUserDataState = (value: any) => {
+  const setUserDataState = (value?: UserData) => {
     dispatch({
       type: "userDataState",
       payload: {
@@ -25,7 +26,7 @@ export function AppWrapper({ children }: { children: React.ReactNode }) {
   const fetchUserData = () => {
       const data = getUserDataFromStorage() 
 
-    setUserDataState(data)
+    setUserDataState(data || undefined);
   }
 
   useEffect(() => {

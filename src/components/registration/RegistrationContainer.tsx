@@ -21,7 +21,7 @@ const RegistrationContainer = () => {
       const data = await createProfile(name, email, password);
       setUserDataToStorage(data);
       setUserDataState && setUserDataState(data);
-      router.push("/");
+      router.push("/jobs");
     } catch (e) {
       console.log("invalid data");
     }

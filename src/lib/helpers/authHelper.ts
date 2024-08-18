@@ -11,3 +11,7 @@ export const getUserDataFromStorage = (): UserData | null => {
   }
   return null;
 };
+
+export const deleteUserDataFromSotage = () => {
+  localStorage.removeItem("userData");
+};

@@ -18,7 +18,7 @@ interface Params {
   page: number;
 }
 
-interface JobItem {
+export interface JobItem {
   job_id: string;
   job_title: string;
   employer_name: string;

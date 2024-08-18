@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import InlineSpinner from "../inlineSpinner/InlineSpinner";
 
 interface UserPreferenceProps {
   title: string;
   defaultValue: string | undefined;
   type: "input" | "textarea";
+  isLoading: boolean;
   changeField: (fieldQuery: string) => void;
 }
 
@@ -12,6 +14,7 @@ const UserPreference = ({
   defaultValue,
   type,
   changeField,
+  isLoading,
 }: UserPreferenceProps) => {
   const [query, setQuery] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -56,21 +59,18 @@ const UserPreference = ({
       </div>
 
       <div className="ml-4">
-        {isEditing ? (
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-200"
-            onClick={handleSetQuery}
-          >
-            Save
-          </button>
-        ) : (
-          <button
-            className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition duration-200"
-            onClick={() => setIsEditing(true)}
-          >
-            Edit
-          </button>
-        )}
+        <button
+          className=" flex items-center justify-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300 transition duration-200"
+          onClick={isEditing ? handleSetQuery : () => setIsEditing(true)}
+        >
+          {isLoading ? (
+            <InlineSpinner size={20} />
+          ) : isEditing ? (
+            "Save"
+          ) : (
+            "Edit"
+          )}
+        </button>
       </div>
     </div>
   );
