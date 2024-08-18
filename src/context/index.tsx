@@ -1,29 +1,42 @@
 "use client";
 
-import { UserData } from "@/api/types";
 import {
-  createContext,
-  Dispatch,
-  SetStateAction,
   useContext,
-  useState,
+  useReducer,
+  useEffect
 } from "react";
+import { reducer } from "./reducer";
+import { AppContext, INITIAL_STATE } from "./context";
+import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
 
-interface AppContextI {
-  token: string;
-  setToken: Dispatch<SetStateAction<string>>;
-}
-
-const AppContext = createContext<any>("");
 
 export function AppWrapper({ children }: { children: React.ReactNode }) {
-  let [userDataState, setUserDataState] = useState<UserData | undefined>(undefined);
+  const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+
+  const setUserDataState = (value: any) => {
+    dispatch({
+      type: "userDataState",
+      payload: {
+        userDataState: value
+      }
+    })
+  }
+
+  const fetchUserData = () => {
+      const data = getUserDataFromStorage() 
+
+    setUserDataState(data)
+  }
+
+  useEffect(() => {
+    fetchUserData()
+  }, [])
 
   return (
     <AppContext.Provider
       value={{
-        userDataState,
-        setUserDataState,
+        ...state,
+        setUserDataState
       }}
     >
       {children}

@@ -9,16 +9,7 @@ import { useAppContext } from "@/context";
 import { getUserDataFromStorage } from "@/lib/helpers/authHelper";
 
 const JobSearchContainer = () => {
-  // const { userDataState, setUserDataState } = useAppContext();
-
-  // useEffect(() => {
-  //   const userData = getUserDataFromStorage();
-
-  //   if (userData) {
-  //     console.log("gig")
-  //     setUserDataState(userData);
-  //   }
-  // }, []);
+  const { userDataState } = useAppContext();
 
   const handleSearch = async (query: string) => {
     setIsLoading(true);
@@ -26,6 +17,21 @@ const JobSearchContainer = () => {
     setIsLoading(false);
     setJobs(res);
   };
+
+  const setJobsByRecomend = async () => {
+    console.log("log2");
+    if (userDataState) {
+      console.log("log1");
+      const res = await getJobsBySearch(
+        userDataState.desiredJobTitle ? userDataState.desiredJobTitle : ""
+      );
+
+      setJobs(res);
+    }
+  };
+  useEffect(() => {
+    setJobsByRecomend();
+  }, [userDataState]);
 
   const [jobs, setJobs] = useState<ReqData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);

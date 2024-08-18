@@ -1,8 +1,11 @@
-'use client'
-
+import Link from "next/link";
 import { useState } from "react";
 
-const ProfileNav = () => {
+interface ProfileNavProps {
+  name: string | null;
+}
+
+const ProfileNav = ({ name }: ProfileNavProps) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -15,22 +18,32 @@ const ProfileNav = () => {
         onClick={toggleDropdown}
         className="text-white focus:outline-none"
       >
-        Profile
+        {name ? name : "Profile"}
       </button>
 
       {/* Dropdown */}
       {dropdownOpen && (
         <div className="absolute top-0.5 right-0 mt-10 bg-white shadow-lg rounded-md">
           <ul className="text-gray-800">
-            <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
-              Option 1
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
-              Option 2
-            </li>
-            <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
-              Option 3
-            </li>
+            {name ? (
+              <>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
+                  <Link href={"/profile"}>Profile</Link>
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
+                  Sign out
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
+                  <Link href={"/login"}>Login</Link>
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer rounded-md">
+                  <Link href={"/create-profile"}>Register</Link>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       )}

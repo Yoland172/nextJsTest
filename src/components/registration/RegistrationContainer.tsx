@@ -11,7 +11,7 @@ import { useAppContext } from "@/context";
 
 const RegistrationContainer = () => {
   const router = useRouter();
-  const { userDataState, setUserDataState } = useAppContext();
+  const { setUserDataState } = useAppContext();
   const handleCreateProfile = async (
     name: string,
     email: string,
@@ -19,24 +19,13 @@ const RegistrationContainer = () => {
   ) => {
     try {
       const data = await createProfile(name, email, password);
-      const userDataObject: UserData = {
-        token: data.token,
-        email: data.email,
-        name: data.name,
-        desiredJobTitle: data.desiredJobTitle,
-        aboutMe: data.aboutMe,
-      };
-      setUserDataToStorage(userDataObject);
-      setUserDataState(userDataObject);
-      // router.push("/");
+      setUserDataToStorage(data);
+      setUserDataState && setUserDataState(data);
+      router.push("/");
     } catch (e) {
       console.log("invalid data");
     }
   };
-
-  useEffect(() => {
-    console.log(userDataState);
-  },[userDataState])
   return <Registaration createProfile={handleCreateProfile} />;
 };
 

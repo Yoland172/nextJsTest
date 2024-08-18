@@ -7,7 +7,6 @@ export const setUserDataToStorage = (data: UserData) => {
 export const getUserDataFromStorage = (): UserData | null => {
   const data = localStorage.getItem("userData");
   if (data) {
-    console.log(JSON.parse(data));
     return JSON.parse(data);
   }
   return null;

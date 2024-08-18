@@ -1,6 +1,5 @@
 import RegistrationContainer from "@/components/registration/RegistrationContainer";
 import Link from "next/link";
-import React from "react";
 
 const CreateProfile = () => {
   return (

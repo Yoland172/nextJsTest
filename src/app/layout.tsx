@@ -18,12 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <header className="bg-gray-500 w-full h-11 flex justify-end items-center pr-[10px] relative">
-          <ProfileNavContainer />
-        </header>
-        <AppWrapper>{children}</AppWrapper>
-      </body>
+      <AppWrapper>
+        <body className={inter.className}>
+          <header className="bg-gray-500 w-full h-11 flex justify-end items-center pr-[10px] relative">
+            <ProfileNavContainer />
+          </header>
+          {children}
+        </body>
+      </AppWrapper>
     </html>
   );
 }

@@ -1,5 +1,4 @@
 import JobSearchContainer from "@/components/jobsSearch/JobSearchContainer";
-import Image from "next/image";
 
 export default function Home() {
   return (

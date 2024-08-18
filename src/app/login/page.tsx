@@ -1,6 +1,5 @@
 import LoginContainer from "@/components/login/LoginContainer";
 import Link from "next/link";
-import React from "react";
 
 const Login = () => {
   return (

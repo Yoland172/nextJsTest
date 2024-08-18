@@ -13,10 +13,6 @@ interface RegistrationProps {
 }
 
 const Registration = ({ createProfile }: RegistrationProps) => {
-  const { userDataState, setUserDataState } = useAppContext();
-  useEffect(() => {
-    console.log(userDataState);
-  }, [userDataState]);
   const {
     register,
     handleSubmit,
