@@ -1,3 +1,4 @@
+
 # Next.js Test Project
 
 This repository contains a Next.js project designed to demonstrate essential features and best practices for building scalable and maintainable applications using Next.js, React, and TypeScript.
@@ -11,9 +12,13 @@ This repository contains a Next.js project designed to demonstrate essential fea
 
 ### Installation
 
-##Clone the repository:
+## Clone the repository:
+
    `git clone https://github.com/Yoland172/nextJsTest.git`
-   ##Install dependencies
+   
+  
+
+## Install dependencies
 
 `cd nextJsTest`
 
@@ -23,9 +28,9 @@ This repository contains a Next.js project designed to demonstrate essential fea
 
 `yarn install`
 
-##Running the Development Server
+## Running the Development Server
 
-####To start the development server, run:
+To start the development server, run:
 
 `npm run dev`
    or
@@ -33,15 +38,16 @@ This repository contains a Next.js project designed to demonstrate essential fea
 
 Open http://localhost:3000 with your browser to see the result.
 
-##Features
-React Components: Utilizes functional React components optimized for performance and reusability.
-TypeScript: Leverages TypeScript for type safety and better developer experience.
-Styling: Implements Tailwind CSS .
+## Features
+
+- React Components: Utilizes functional React components optimized for performance and reusability.
+- TypeScript: Leverages TypeScript for type safety and better developer experience.
+- Styling: Implements Tailwind CSS .
 
 
-###Project Structure
+## Project Structure
 
-- api/: This directory is used for making server requests and also stores a file named types which contains types for server-side data. This setup helps in managing data interactions centrally.
+ - api/: This directory is used for making server requests and also stores a file named types which contains types for server-side data. This setup helps in managing data interactions centrally.
 
 - app/: Contains server-side components. These are likely Next.js pages or components that involve server-side logic, such as dynamic data fetching at request time.
 
@@ -53,16 +59,18 @@ Styling: Implements Tailwind CSS .
 
 - ui/: Stores reusable UI components. These components are designed to be reused in different parts of the application, ensuring consistency and efficiency in UI development.
 
-##Main functional
+## Main functional
 
 - Authentication: Users can sign in to access and interact with the platform securely.
 - Job Recommendations: The system analyzes user preferences and behavior to suggest relevant job vacancies.
 - Favorites Feature: Users have the ability to like or bookmark their preferred job listings for easy access later.
 
-##Contributing
+## Contributing
+
 Contributions are welcome! Please refer to the contributions guide for details on proposing changes.
 
-##Deployment
+## Deployment
+
 This project can be deployed on various hosting platforms that support Node.js environments, such as Vercel, Netlify, or Heroku.
 
 #### Deploying on Vercel
@@ -74,8 +82,10 @@ The easiest way to deploy this Next.js project is by using [Vercel](https://verc
 3. **Deployment**: Push your changes to GitHub, and Vercel will automatically deploy your updates.
 
 
-##License
+## License
+
 This project is licensed under the MIT License. This permits individuals or organizations to use, modify, distribute, and privately use the software for any purpose, provided that the original copyright and license notice are included in all copies or substantial portions of the software.
 
-##Acknowledgments
-Thanks to everyone who has contributed to the project!
+## Acknowledgments
+
+Thanks to everyone who has contributed to the project!# Next.js Test Project
