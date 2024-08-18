@@ -1,4 +1,4 @@
-import RegistrationContainer from "@/components/registration/RegistrationContainer";
+import { RegistrationContainer } from "@/components/registration";
 import Link from "next/link";
 
 const CreateProfile = () => {

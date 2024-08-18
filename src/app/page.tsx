@@ -1,4 +1,3 @@
-import JobSearchContainer from "@/components/jobsSearch/JobSearchContainer";
 
 export default function Home() {
   return (

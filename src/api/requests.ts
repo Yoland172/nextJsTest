@@ -16,7 +16,7 @@ const authInstance = axios.create({
 
 //jobs
 
-export const getJobsBySearch = async (query: string) => {
+export const getJobsBySearch = async (query: string|null) => {
   const res = await jobInstance.get<ReqData>(`/search?query=${query}&page=1`);
   return res.data;
 };
@@ -41,7 +41,6 @@ export const createProfile = async (
   email: string,
   password: string
 ) => {
-  console.log(fullName, email, password);
   const res = await authInstance.post<UserData>("/auth", {
     name: fullName,
     email,
@@ -56,7 +55,6 @@ export const changeUserField = async (
   fieldQuery: string,
   token: string
 ) => {
-  console.log({ [fieldName]: fieldQuery }, token);
   const res = await authInstance.patch(
     "/profile",
     {

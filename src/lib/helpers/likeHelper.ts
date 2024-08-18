@@ -12,8 +12,6 @@ export const getLikedJobsFromStorage = (): JobItem[] | null => {
 };
 
 export const setLikedJobToStorage = (job: JobItem[]) => {
-  console.log(job);
-  console.log("jvfnjfnv");
   localStorage.setItem("likedJobs", JSON.stringify(job));
 };
 

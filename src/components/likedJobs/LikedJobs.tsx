@@ -12,7 +12,7 @@ interface LikedJobsProps {
 const LikedJobs = ({ jobs, action }: LikedJobsProps) => {
   return (
     <section className="flex gap-5 flex-col">
-      {jobs ? (
+      {jobs && jobs?.length > 0 ? (
         jobs.map((el) => {
           return (
             <JobItem

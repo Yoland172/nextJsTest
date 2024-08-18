@@ -1,4 +1,5 @@
-import LikedJobsContainer from "@/components/likedJobs/LikedJobsContainer";
+import { LikedJobsContainer } from "@/components/likedJobs";
+
 
 const Liked = () => {
   return (

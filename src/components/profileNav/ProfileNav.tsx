@@ -1,7 +1,8 @@
+"use client"
+
 import { deleteUserDataFromSotage } from "@/lib/helpers/authHelper";
 import { deleteAllLikedJobsFromSotage } from "@/lib/helpers/likeHelper";
 import Link from "next/link";
-import { Router } from "next/router";
 import { useState } from "react";
 
 interface ProfileNavProps {

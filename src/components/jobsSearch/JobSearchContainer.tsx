@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Search from "./search/Search";
 import { getJobsBySearch } from "@/api/requests";
-import { JobItem, ReqData } from "@/api/types";
+import { JobItem } from "@/api/types";
 import Jobs from "./jobs/Jobs";
 import { useAppContext } from "@/context";
 import NoRecomendations from "./NoRecomendations";

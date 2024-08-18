@@ -1,8 +1,8 @@
 "use client";
 
 import { UserData } from "@/api/types";
-import UserPreference from "@/ui/userPreference/UserPreference";
 import React from "react";
+import UserPreference from "./userPreference/UserPreference";
 
 interface ProfileProps {
   userInfo: UserData | undefined;

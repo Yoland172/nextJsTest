@@ -1,4 +1,4 @@
-import JobSearchContainer from "@/components/jobsSearch/JobSearchContainer";
+import { JobSearchContainer } from "@/components/jobsSearch";
 
 export default function Jobs() {
   return (
