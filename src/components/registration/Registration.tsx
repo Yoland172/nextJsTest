@@ -39,6 +39,7 @@ const Registration = ({ createProfile }: RegistrationProps) => {
           maxLength: 50,
         })}
         type="text"
+        placeholder = "Enter your full name"
         error={errors.fulName}
       />
 
@@ -52,6 +53,7 @@ const Registration = ({ createProfile }: RegistrationProps) => {
           },
           maxLength: 50,
         })}
+           placeholder = "Enter your email"
         type="text"
         error={errors.email}
       />
@@ -61,6 +63,7 @@ const Registration = ({ createProfile }: RegistrationProps) => {
         registerReq={register("password", {
           required: "Required",
         })}
+           placeholder = "Enter your password"
         type="password"
         error={errors.password}
       />

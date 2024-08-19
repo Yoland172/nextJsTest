@@ -35,6 +35,7 @@ const Login = ({ login }: LoginProps) => {
           },
           maxLength: 50,
         })}
+        placeholder="Enter your email"
         type="text"
         error={errors.email}
       />
@@ -44,6 +45,7 @@ const Login = ({ login }: LoginProps) => {
         registerReq={register("password", {
           required: "Required",
         })}
+        placeholder="Enter your password"
         type="password"
         error={errors.password}
       />

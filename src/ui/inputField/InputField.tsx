@@ -2,6 +2,7 @@ import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 interface InputFieldProps {
   title: string;
+  placeholder: string;
   registerReq: UseFormRegisterReturn;
   type: string;
   error?: FieldError;
